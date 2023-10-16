@@ -11,6 +11,8 @@ export const DEFAULT_SPEED = 2;
 
 const ENERGIZER_DURATION: MilliSeconds = 5000;
 
+const apiUrl = "https://packman-api.vercel.app/"
+
 export class Game {
   constructor(store: Store, score: number) {
     this.store = store;
@@ -65,17 +67,34 @@ export class Game {
     const isGameOver = pacMan.dead && pacMan.extraLivesLeft === 0;
 
     if (isGameOver) {
-      const apiUrl = "https://flappy-api-9iej.vercel.app/updateWinnerScore"
-      const data = { winnerScore: 1, winnerAddress: "0xB234cBE1587c7D881EB8c9A2E13e729202A7c0ff" }
-      console.log(data)
 
-      axios.post(apiUrl, data).then((res) => {
-        console.log(res)
-        //window.location.reload();
+      axios.get(apiUrl + "getHighScore").then((res) => {
+        console.log(res.data)
+
+        if (this.score > res.data.highScore) {
+
+          const data = { winnerScore: Number(this.score), winnerAddress: "0xB234cBE1587c7D881EB8c9A2E13e729202A7c0ff" }
+          console.log(data)
+
+          axios.post(apiUrl + "updateWinnerScore", data).then((res) => {
+            console.log(res)
+            //window.location.reload();
+          }).catch((err) => {
+            console.log(err)
+            //window.location.reload();
+          })
+        }
+
+
+
       }).catch((err) => {
         console.log(err)
         //window.location.reload();
       })
+
+
+
+
     }
 
 

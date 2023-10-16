@@ -40,6 +40,7 @@ const InitialPage = () => {
       deactivate();
       localStorage.setItem("isWalletConnected", "false");
       localStorage.removeItem("connector");
+      localStorage.removeItem("wallet");
       setButtonDisabled(true);
     } catch (ex) {
       console.log(ex);
@@ -168,11 +169,7 @@ const InitialPage = () => {
     if (account && library) {
       isGameStarted().then((res: any) => {
         console.log("isGameStarted", res);
-        if (res === true) {
-          setButtonDisabled(false);
-        } else {
-          setButtonDisabled(true);
-        }
+        localStorage.setItem("wallet", account!);
       });
 
       getGamePrice().then((res: any) => {
@@ -190,15 +187,19 @@ const InitialPage = () => {
         <Toaster />
       </div>
       <div
-        onClick={() => {
-          setIsSpacePressed(true);
-        }}
+
         className={`${style.button} ${buttonDisabled ? style.disabledButton : ""
           }`}
       >
         {" "}
         <div style={{ color: "white" }} className={style.buttonText} onClick={() => {
-          history.push("/game");
+          setIsSpacePressed(true);
+          playGame(gamePrice).then((res: any) => {
+            if (res) {
+              //dispatch(gameStart());
+              history.push("/game");
+            }
+          })
         }}>
           Press Space to Start Game
         </div>
