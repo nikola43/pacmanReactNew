@@ -51,6 +51,12 @@ export const GamePage: React.FC = observer(() => {
         <VSpace size="large" />
         <Row justify="center">
           <ExtraLives />
+
+        </Row>
+        <Row justify="center">
+          <button onClick={() => {
+            store.resetGame();
+          }}>Play</button>
         </Row>
       </BoardArea>
 

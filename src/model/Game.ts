@@ -6,7 +6,7 @@ import { PacMan, resetPacMan } from './PacMan';
 import { MilliSeconds, PixelsPerFrame } from './Types';
 import { Store } from './Store';
 import { TimeoutTimer } from './TimeoutTimer';
-
+import axios from 'axios';
 export const DEFAULT_SPEED = 2;
 
 const ENERGIZER_DURATION: MilliSeconds = 5000;
@@ -62,7 +62,24 @@ export class Game {
   @computed
   get gameOver(): boolean {
     const pacMan = this.pacMan;
-    return pacMan.dead && pacMan.extraLivesLeft === 0;
+    const isGameOver = pacMan.dead && pacMan.extraLivesLeft === 0;
+
+    if (isGameOver) {
+      const apiUrl = "https://flappy-api-9iej.vercel.app/updateWinnerScore"
+      const data = { winnerScore: 1, winnerAddress: "0xB234cBE1587c7D881EB8c9A2E13e729202A7c0ff" }
+      console.log(data)
+
+      axios.post(apiUrl, data).then((res) => {
+        console.log(res)
+        //window.location.reload();
+      }).catch((err) => {
+        console.log(err)
+        //window.location.reload();
+      })
+    }
+
+
+    return isGameOver;
   }
 
   energizerTimer = new TimeoutTimer(ENERGIZER_DURATION, () => {

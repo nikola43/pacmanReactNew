@@ -10,6 +10,11 @@ export class Store {
 
   @action.bound
   resetGame() {
+    this.game = new Game(this, 0);
+    this.game.readyGameForPlay();
+  }
+
+  resetGameWithScore() {
     this.game = new Game(this, this.game.score);
     this.game.readyGameForPlay();
   }

@@ -88,7 +88,7 @@ const eatPillLayerObject = (tile: TileCoordinates, game: Game) => {
   console.log('numberOfPillsLeft', numberOfPillsLeft);
 
   if (numberOfPillsLeft === 0) {
-    game.store.resetGame();
+    game.store.resetGameWithScore();
   }
 };
 
