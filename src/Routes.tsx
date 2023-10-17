@@ -6,6 +6,7 @@ import { MazePage } from './pages/MazePage/MazePage';
 import { SpritePage } from './pages/SpritePage/SpritePage';
 import { WayFindingPage } from './pages/WayFindingPage/WayFindingPage';
 import InitialPage from "./pages/InitialPage";
+import LeaderboardPage from './pages/LeaderboardPage';
 
 export const Routes: React.FC = () => {
   return (
@@ -24,6 +25,9 @@ export const Routes: React.FC = () => {
       </Route>
       <Route path="/way-finding">
         <WayFindingPage />
+      </Route>
+      <Route path="/leaderboard">
+        <LeaderboardPage />
       </Route>
     </Switch>
   );

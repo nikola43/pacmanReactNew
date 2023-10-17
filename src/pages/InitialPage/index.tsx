@@ -1,17 +1,11 @@
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-//import { useDispatch } from "react-redux";
-//import { useNavigate } from "react-router-dom";
 import PacManGameAbi from "../../blockchain/abi/PacManGame.json";
 import { injected } from "../../blockchain/metamaskConnector";
-//import { gameStart } from "../../redux/actions/actions";
-import style from "./initialPage.module.css";
-import Pepe from "./pepe.jpg";
 import { useHistory } from "react-router-dom";
+import style from "./initialPage.module.css";
 const InitialPage = () => {
-  //const navigate = useNavigate();
-  const [buttonDisabled, setButtonDisabled] = useState(true);
   const [gamePrice, setGamePrice] = useState();
   const [isSpacePressed, setIsSpacePressed] = useState(false);
   const history = useHistory();
@@ -41,7 +35,6 @@ const InitialPage = () => {
       localStorage.setItem("isWalletConnected", "false");
       localStorage.removeItem("connector");
       localStorage.removeItem("wallet");
-      setButtonDisabled(true);
     } catch (ex) {
       console.log(ex);
     }
@@ -89,7 +82,6 @@ const InitialPage = () => {
       await activate(injected, undefined, true);
       localStorage.setItem("isWalletConnected", "true");
       localStorage.setItem("connector", "injected");
-      setButtonDisabled(false);
     } catch (ex) {
       console.log("Please install Metamask");
       console.log(ex);
@@ -152,13 +144,19 @@ const InitialPage = () => {
     };
   }, []);
 
-  /*
+
   useEffect(() => {
     if (isSpacePressed && account) {
-      
+      console.log("isSpacePressed", isSpacePressed);
+      playGame(gamePrice).then((res: any) => {
+        if (res) {
+          //dispatch(gameStart());
+          history.push("/game");
+        }
+      })
     }
   }, [isSpacePressed]);
-  */
+
 
 
   useEffect(() => {
@@ -186,30 +184,21 @@ const InitialPage = () => {
       <div>
         <Toaster />
       </div>
-      <div
 
-        className={`${style.button} ${buttonDisabled ? style.disabledButton : ""
-          }`}
-      >
-        {" "}
-        <div style={{ color: "white" }} className={style.buttonText} onClick={() => {
-          setIsSpacePressed(true);
-          playGame(gamePrice).then((res: any) => {
-            if (res) {
-              //dispatch(gameStart());
-              history.push("/game");
-            }
-          })
-        }}>
-          Press Space to Start Game
-        </div>
-      </div>
-
-
+      <h1 style={{ color: "white" }} className={style.buttonText} onClick={() => {
+        playGame(gamePrice).then((res: any) => {
+          if (res) {
+            //dispatch(gameStart());
+            history.push("/game");
+          }
+        })
+      }}>
+        Press Space to Start Game
+      </h1>
 
       <h1
         onClick={active ? disconnect : connectMetamask}
-        style={{ color: "white", cursor: "pointer", marginTop: "100px" }}
+        className={style.buttonText}
       >
         {active
           ? `Connected: ${getWalletAbreviation(account!)}`
@@ -223,11 +212,11 @@ const InitialPage = () => {
           return;
         }
 
-        //navigate("/leaderboard");
-      }} style={{ color: "white", cursor: "pointer", marginTop: "50px" }}>
+        history.push("/leaderboard");
+      }} className={style.buttonText}>
         Leaderboard
       </h1>
-    </div>
+    </div >
   );
 };
 

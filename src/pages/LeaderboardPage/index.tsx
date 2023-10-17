@@ -1,10 +1,21 @@
 import style from "./leaderboardPage.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
+
+interface Rank {
+  address: string;
+  score: number;
+}
 
 const LeaderboardPage = () => {
-  const [rankList, setRankList] = useState([]);
+  const [rankList, setRankList] = useState([] as Rank[]);
   const apiUrl = "https://packman-api.vercel.app/getRanking"
+  const history = useHistory();
+
+  // url route
+  const urlRoute = window.location.href.split("/")[3];
+  console.log(urlRoute);
 
   useEffect(() => {
     axios
@@ -17,7 +28,7 @@ const LeaderboardPage = () => {
       });
   }, []);
 
-  function getRankEmoji(rank) {
+  function getRankEmoji(rank: number) {
     switch (rank) {
       case 1:
         return "🥇";
@@ -54,6 +65,15 @@ const LeaderboardPage = () => {
           })}
         </tbody>
       </table>
+
+      {/* if page urlRoute is leaderboard render back button*/}
+      {urlRoute === "leaderboard" && (
+        <h1 onClick={() => {
+          history.push("/");
+        }} className={style.buttonText}>
+          Back
+        </h1>
+      )}
     </div>
   );
 };

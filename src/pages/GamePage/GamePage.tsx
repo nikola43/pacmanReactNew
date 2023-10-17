@@ -129,21 +129,26 @@ export const GamePage: React.FC = observer(() => {
         <Row justify="center">
           <ExtraLives />
         </Row>
-        <Row justify="center">
-          <button onClick={() => {
-            playGame(gamePrice).then((res: any) => {
-              console.log("playGame", res);
-              store.resetGame();
-            })
 
-          }}>Play</button>
-        </Row>
+        {store.game.gameOver && (
+          <Row justify="center">
+            <h1 style={{ color: "white", cursor: "pointer", fontFamily: "Joystix" }} onClick={() => {
+              playGame(gamePrice).then((res: any) => {
+                console.log("playGame", res);
+                store.resetGame();
+              })
+
+            }}>Play Again</h1>
+          </Row>
+        )}
+
       </BoardArea>
 
 
       <DebugArea>
+        <DebugView />
         {/** <DebugView />**/}
-        <LeaderboardPage />
+        {/** <LeaderboardPage />**/}
       </DebugArea>
     </Layout>
   );

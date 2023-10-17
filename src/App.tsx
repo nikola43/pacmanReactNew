@@ -16,7 +16,6 @@ const App: FC<{ store?: Store; Router?: ComponentType }> = ({
     <StoreProvider value={store}>
       <Router>
         <div className="App">
-          <AppMenu />
           <Routes />
         </div>
       </Router>

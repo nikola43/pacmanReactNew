@@ -1,3 +1,10 @@
+/* En tu archivo InitialPage.module.css */
+@font-face {
+    font-family: 'arcadeClassic';
+    src: url("../../fonts/ARCADECLASSIC.TTF");
+    font-weight: 400;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -14,14 +21,18 @@ table {
     border-collapse: collapse;
 }
 
-table, th, td {
+table,
+th,
+td {
     border: 1px solid #343434;
 }
 
-th, td {
+th,
+td {
     padding: 8px;
     text-align: left;
     font-size: 1.5rem;
+    font-family: arcadeClassic, serif;
 }
 
 tr:nth-child(even) {
@@ -31,4 +42,13 @@ tr:nth-child(even) {
 th {
     background-color: #4CAF50;
     color: white;
+    font-family: arcadeClassic, serif;
+}
+
+.buttonText {
+    font-family: arcadeClassic, serif;
+    font-size: 50px;
+    color: white;
+    cursor: pointer;
+    -webkit-text-stroke: 1px black;
 }
