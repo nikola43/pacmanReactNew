@@ -16,14 +16,16 @@ import { useKeyboardActions } from './components/useKeyboardActions';
 import { VSpace } from '../../components/Spacer';
 import { useGameLoop } from '../../model/useGameLoop';
 import PacManGameAbi from "../../blockchain/abi/PacManGame.json";
-import { injected } from "../../blockchain/metamaskConnector";
 import { useWeb3React } from "@web3-react/core";
+import { useHistory } from "react-router-dom";
+import { ghostCollidesWithPacMan } from '../../model/detectCollisions';
+import LeaderboardPage from '../LeaderboardPage';
 export const GamePage: React.FC = observer(() => {
   const { active, account, library, activate, deactivate, chainId } =
     useWeb3React();
   const selectedNetwork = 80001;
   const [gamePrice, setGamePrice] = useState();
-
+  const history = useHistory();
 
   let pancmanGameAddress = "0x0000fF0d724a25FBBcB1504642CF1713D3c13fac";
   let pancmanGameContract: any;
@@ -65,7 +67,14 @@ export const GamePage: React.FC = observer(() => {
   };
 
   useEffect(() => {
-
+    console.log("account", account);
+    if (account === undefined) {
+      localStorage.removeItem("wallet");
+      //ghostCollidesWithPacMan(store.game.ghosts[0]);
+      //ghostCollidesWithPacMan(store.game.ghosts[0]);
+      //ghostCollidesWithPacMan(store.game.ghosts[0]);
+      //history.push("/");
+    }
 
     if (account && library) {
       isGameStarted().then((res: any) => {
@@ -119,7 +128,6 @@ export const GamePage: React.FC = observer(() => {
         <VSpace size="large" />
         <Row justify="center">
           <ExtraLives />
-
         </Row>
         <Row justify="center">
           <button onClick={() => {
@@ -132,8 +140,10 @@ export const GamePage: React.FC = observer(() => {
         </Row>
       </BoardArea>
 
+
       <DebugArea>
-        <DebugView />
+        {/** <DebugView />**/}
+        <LeaderboardPage />
       </DebugArea>
     </Layout>
   );
@@ -144,6 +154,7 @@ const Layout = styled.div`
   margin-right: 16px;
 
   display: grid;
+  align-items: center;
 
   @media (min-width: 1280px) {
     grid-template-columns: 1fr 1fr;
