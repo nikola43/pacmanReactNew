@@ -146,7 +146,7 @@ export const GamePage: React.FC = observer(() => {
 
 
       <DebugArea>
-        <DebugView />
+        <LeaderboardPage />
         {/** <DebugView />**/}
         {/** <LeaderboardPage />**/}
       </DebugArea>
