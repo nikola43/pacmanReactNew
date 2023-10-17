@@ -26,3 +26,6 @@ yarn-error.log*
 .vscode
 
 .eslintcache
+
+build
+build.zip
